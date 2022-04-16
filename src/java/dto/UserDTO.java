@@ -4,7 +4,7 @@ import javax.servlet.http.Part;
 
 public class UserDTO 
 {
-    String userid,password,mode,name,dob,gender,contact,email,aadhar,newpass,address,profession,newemail,age;
+    String userid,password,mode,name,dob,gender,contact,email,aadhar,newpass,address,profession,age;
     Part profile;
     
     
@@ -22,15 +22,6 @@ public class UserDTO
 
     public String getAge() {
         return age;
-    }
-
-    public String getNewemail() {
-        return newemail;
-    }
-
-    public void setNewemail(String newemail) {
-        this.newemail = newemail;
-        System.out.println("heyo");
     }
 
     public String getAddress() {

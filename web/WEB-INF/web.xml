@@ -72,6 +72,14 @@
         <servlet-name>VehicleRegistrationServlet</servlet-name>
         <servlet-class>controller.VehicleRegistrationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TrafficPoliceUpdateServlet</servlet-name>
+        <servlet-class>controller.TrafficPoliceUpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VehicleComplainServlet</servlet-name>
+        <servlet-class>controller.VehicleComplainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLoginCheckerServlet</servlet-name>
         <url-pattern>/UserLoginCheckerServlet</url-pattern>
@@ -159,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>VehicleRegistrationServlet</servlet-name>
         <url-pattern>/VehicleRegistrationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrafficPoliceUpdateServlet</servlet-name>
+        <url-pattern>/TrafficPoliceUpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehicleComplainServlet</servlet-name>
+        <url-pattern>/VehicleComplainServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

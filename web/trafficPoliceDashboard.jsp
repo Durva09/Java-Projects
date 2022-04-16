@@ -1,11 +1,11 @@
-<%@page import="dto.DealerDTO"%>
-<%@page import="dao.DealerDAO"%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dto.TrafficPoliceDTO"%>
+<%@page import="dao.TrafficPoliceDAO"%>
 <!DOCTYPE html>
 <html lang="en" class="menuitem-active">
   <!-- Mirrored from coderthemes.com/hyper_2/saas/apps-calendar.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:46:37 GMT --><head>
     <meta charset="utf-8" />
-    <title>Dealer Dashboard</title>
+    <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -136,142 +136,179 @@
     data-leftbar-theme="dark"
   >
       <%
-          String userid=(String)session.getAttribute("userid");
-           if(session.getAttribute("userid")==null)
+        String userid=(String)session.getAttribute("userid");
+        if(session.getAttribute("userid")==null)
           {
               response.sendRedirect("userLogin.jsp");
               return ;
           }
-      %>
-      
-      <%
-       DealerDAO dealer=new DealerDAO();
-       DealerDTO dealers=dealer.getDealerData(userid);
-      String userotp = (String)request.getAttribute("Message");
-      if(userotp!=null)
-      {  
-      %>
-      <script>
-      $(document).ready(function(){
-      $("#otp-modal").modal('show');
-      });
-      </script>
-      <%
-       }  
-       
-      %>
-      
-      
-      
-      
+        TrafficPoliceDAO police=new TrafficPoliceDAO();
+        TrafficPoliceDTO traffic=police.getTrafficPoliceData(userid);
+        String userotp = (String)request.getAttribute("Message");
+        if(userotp!=null)
+        {  
+        %>
+        <script>
+        $(document).ready(function(){
+        $("#otp-modal").modal('show');
+        });
+        </script>
+        <%
+         }  
+    %>
     <!-- Begin page -->
     <div class="wrapper menuitem-active">
       <!-- ========== Left Sidebar Start ========== -->
       <div class="leftside-menu menuitem-active show">
         <!-- LOGO -->
-      <a href="index.html" class="logo text-center logo-dark">
-        <span class="logo-lg">
-          <img src="assets/images/logo-dark.png" alt="" height="16">
-        </span>
-        <span class="logo-sm">
-          <img src="assets/images/logo_sm_dark.png" alt="" height="16">
-        </span>
-      </a>
+        <a href="index.html" class="logo text-center logo-light">
+          <span class="logo-lg">
+            <img src="assets/images/logo.png" alt="" height="16" />
+          </span>
+          <span class="logo-sm">
+            <img src="assets/images/logo_sm.png" alt="" height="16" />
+          </span>
+        </a>
 
-      <div class="h-100 show" id="leftside-menu-container" data-simplebar="init">
-        <div class="simplebar-wrapper menuitem-active" style="margin: 0px">
-          <div class="simplebar-height-auto-observer-wrapper">
-            <div class="simplebar-height-auto-observer"></div>
-          </div>
-          <div class="simplebar-mask show">
-            <div class="simplebar-offset" style="right: 0px; bottom: 0px">
-              <div class="simplebar-content-wrapper menuitem-active" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden">
-                <div class="simplebar-content show" style="padding: 0px">
-                  <!--- Sidemenu -->
-                  <ul class="side-nav">
-                    <li class="side-nav-title side-nav-item">Navigation</li>
+        <!-- LOGO -->
+        <a href="index.html" class="logo text-center logo-dark">
+          <span class="logo-lg">
+            <img src="assets/images/logo-dark.png" alt="" height="16" />
+          </span>
+          <span class="logo-sm">
+            <img src="assets/images/logo_sm_dark.png" alt="" height="16" />
+          </span>
+        </a>
 
-                    <li class="side-nav-item">
-                      <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link collapsed">
-                        <i class="uil-home-alt"></i>
-                        <!-- <span class="badge bg-success float-end">4</span> -->
-                        <span> Dashboards </span>
-                      </a>
-                    </li>
+        <div
+          class="h-100 show"
+          id="leftside-menu-container"
+          data-simplebar="init"
+        >
+          <div class="simplebar-wrapper menuitem-active" style="margin: 0px">
+            <div class="simplebar-height-auto-observer-wrapper">
+              <div class="simplebar-height-auto-observer"></div>
+            </div>
+            <div class="simplebar-mask show">
+              <div class="simplebar-offset" style="right: 0px; bottom: 0px">
+                <div
+                  class="simplebar-content-wrapper menuitem-active"
+                  tabindex="0"
+                  role="region"
+                  aria-label="scrollable content"
+                  style="height: 100%; overflow: hidden"
+                >
+                  <div class="simplebar-content show" style="padding: 0px">
+                    <!--- Sidemenu -->
+                    <ul class="side-nav">
+                     
+<!--                       <li class="side-nav-item">
+                  <a href="userDashboard.jsp" class="side-nav-link collapsed">
+                    <i class="uil-home-alt"></i>
+                     <span class="badge bg-success float-end">4</span> 
+                    <span> Dashboards </span>
+                  </a>
+                </li>-->
 
-                    <li class="side-nav-title side-nav-item">Apps</li>
+                <li class="side-nav-title side-nav-item">Dashboard</li>
 
-                    <li class="side-nav-item menuitem-active">
-                      <a href="apps-calendar.html" class="side-nav-link active">
-                        <i class="uil-user"></i>
-                        <span> Profile </span>
-                      </a>
-                    </li>
+                <li class="side-nav-item active">
+                  <a href="userDashboard.jsp" class="side-nav-link active">
+                    <i class="uil-user"></i>
+                    <span> Profile </span>
+                  </a>
+                </li>
 
-                    <li class="side-nav-item">
-                      <a href="apps-chat.html" class="side-nav-link">
-                        <i class="fa fa-car"></i>
-                        <span> Vehicle Registration </span>
-                      </a>
-                    </li>
+                <li class="side-nav-item ">
+                  <a href="userDocs.jsp" class="side-nav-link">
+                    <i class="uil-folder"></i>
+                    <span> Fetch Docs </span>
+                  </a>
+                </li>
 
-                    <li class="side-nav-item">
-                      <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link collapsed">
-                        <i class="fa fa-car-alt"></i>
-                        <span>Registered Vehicle</span>
-                        <span class="menu-arrow"></span>
-                      </a>
-                      <div class="collapse" id="sidebarEcommerce">
-                        <ul class="side-nav-second-level">
-                          <li>
-                            <a href="apps-ecommerce-products.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                              2-Wheeler Vehicle</a>
-                          </li>
-                          <li>
-                            <a href="apps-ecommerce-products.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                              4-Wheeler Vehicle</a>
-                          </li>
-                          <li>
-                            <a href="apps-ecommerce-products.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                              6-Wheeler Vehicle</a>
-                          </li>
-                          <li>
-                            <a href="apps-ecommerce-products.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                              8-Wheeler Vehicle</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li class="side-nav-item">
-                      <a href="apps-chat.html" class="side-nav-link">
-                        <i class="uil-sign-out-alt"></i>
-                        <span> Logout </span>
-                      </a>
-                    </li>
+                      <li class="side-nav-item">
+                        <a
+                          data-bs-toggle="collapse"
+                          href="#sidebarEcommerce"
+                          aria-expanded="false"
+                          aria-controls="sidebarEcommerce"
+                          class="side-nav-link collapsed"
+                        >
+                          <i class="uil-file-medical-alt"></i>
+                          <span> Medical </span>
+                          <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarEcommerce">
+                          <ul class="side-nav-second-level">
+                            <li>
+                              <a href="medicalStatus.jsp"
+                                ><i class="uil-file-medical-alt"></i
+                                >&nbsp;&nbsp;Basic Health Status</a
+                              >
+                            </li>
+                            <li>
+                              <a href="medicalReports.jsp"
+                                ><i class="uil-file-medical"></i
+                                >&nbsp;&nbsp;Medical Reports</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
 
-                    <div class="clearfix"></div>
-                  </ul>
+                      <li class="side-nav-item ">
+                        <a href="personalDrive.jsp" class="side-nav-link">
+                          <i class="uil-folder"></i>
+                          <span> Personal Drive </span>
+                        </a>
+                      </li>
+
+                      <li class="side-nav-item">
+                        <a href="LogOutCheckerServlet" class="side-nav-link">
+                          <i class="uil-sign-out-alt"></i>
+                          <span> Logout </span>
+                        </a>
+                      </li>
+                      
+                      <!-- End Sidebar -->
+
+                      <div class="clearfix"></div>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
+            <div
+              class="simplebar-placeholder"
+              style="width: auto; height: 1150px"
+            ></div>
           </div>
-          <div class="simplebar-placeholder" style="width: auto; height: 1150px"></div>
-        </div>
-        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden">
-          <div class="simplebar-scrollbar" style="width: 0px; display: none"></div>
-        </div>
-        <div class="simplebar-track simplebar-vertical" style="visibility: hidden">
-          <div class="simplebar-scrollbar" style="
+          <div
+            class="simplebar-track simplebar-horizontal"
+            style="visibility: hidden"
+          >
+            <div
+              class="simplebar-scrollbar"
+              style="width: 0px; display: none"
+            ></div>
+          </div>
+          <div
+            class="simplebar-track simplebar-vertical"
+            style="visibility: hidden"
+          >
+            <div
+              class="simplebar-scrollbar"
+              style="
                 height: 0px;
                 transform: translate3d(0px, 0px, 0px);
                 display: none;
-              "></div>
+              "
+            ></div>
+          </div>
         </div>
+        <!-- Sidebar -left -->
       </div>
-      <!-- Sidebar -left -->
-    </div>
-    <!-- Left Sidebar End -->
-
+      <!-- Left Sidebar End -->
 
       <!-- ============================================================== -->
       <!-- Start Page Content here -->
@@ -843,254 +880,275 @@
                       
                     </ol>
                   </div>
-                  <h4 class="page-title">Dealer Dashboard</h4>
+                  <h4 class="page-title">Dashboard</h4>
                 </div>
               </div>
             </div>
             <!-- end page title -->
 
             <div class="row">
+              
               <!-- User Profile Code -->
 
-              
-            <div class="row">
-              <div class="col-md-15 mx-auto">
-                <!-- Profile widget -->
-                
-
-                <div class="card z-depth-3">
-                  
-                  <!-- end card-box-->
-
-                  <div class="card-body">
-                    <ul class="nav nav-pills nav-pills-primary nav-justified">
-                      <li class="nav-item">
-                        <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active show"><i class="icon-user"></i>
-                          <span class="hidden-xs">Profile</span></a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a href="javascript:void();" data-target="#messages" data-toggle="pill" class="nav-link"><i
-                            class="icon-envelope-open"></i>
-                          <span class="hidden-xs">Messages</span></a>
-                      </li> -->
-                      <li class="nav-item">
-                        <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link"><i class="icon-note"></i>
-                          <span class="hidden-xs">Edit</span></a>
-                      </li>
-                    </ul>
-                    <div class="tab-content p-3">
-                      <!-- User Profile -->
-                      <div class="tab-pane active show" id="profile">
-                        <h5 class="mb-3">User Profile</h5>
-                        <div class="card mb-3" style="flex-direction: row">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Shop Owner</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getName());%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Liencese Issue Date</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getIssue_Date());%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Address</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getAddress());%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Mobile</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getContact());%>
-                              </div>
-                            </div>
-                          </div>
-                              
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getEmail());%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">License No.</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(dealers.getLicense_No());%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">UserId</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                <%out.println(userid);%>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Password</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                *******
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- extra add by dj -->
-                      </div>
-
-                      <!-- <div class="tab-pane" id="messages">
-                        <h5 class="mb-3">Government Id's</h5>
-                        <div class="card mb-3">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Aadhar No.</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                1234-5678-0000
-                                <i class="fa fa-check-circle" aria-hidden="true" style="color: green"></i>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Liencese No.</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                1234-5678-0000
-                                <a class="btn btn-info" target="__blank"
-                                  href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Add Doc</a>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Passport</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                1234-5678-0000
-                                <a class="btn btn-info" target="__blank"
-                                  href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Add Doc</a>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Pancard</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                1234-5678-0000
-                                <a class="btn btn-info" target="__blank"
-                                  href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Add Doc</a>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <h6 class="mb-0">Vaccine Certificate</h6>
-                              </div>
-                              <div class="col-sm-9 text-secondary">
-                                1234-5678-0000
-
-                                <a class="btn btn-info" target="__blank"
-                                  href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Add Doc</a>
-                              </div>
-                            </div>
-                            <hr>
-                          </div>
-                        </div>
-                      </div> -->
-
-                      <div class="tab-pane" id="edit">
-                        <div class="card mb-4">
-                          <div class="card-header">Edit Details</div>
-
-                          <div class="card">
-                            <div class="card-body">
-
-
-
-                              <!-- end nav-->
-                              <div class="tab-content">
-                                <div class="tab-pane show active" id="tooltips-validation-preview">
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltip01">Owner Name</label>
-                                      <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="<%out.println(dealers.getName());%>" readonly required="">
-
-
+                        <div class="row">
+                            <div class="col-md-15 mx-auto">
+                                <!-- Profile widget -->
+                                <div class="bg-white shadow rounded overflow-hidden">
+                                    <div class="px-4 pt-0 pb-4 cover">
+                                        <div class="media align-items-end profile-head">
+                                            <div class="profile mr-3">
+                                                <img src="traffic.jpg" alt="..." width="130" height="100"
+                                                    class="rounded mb-2 img-thumbnail"><a href="#"
+                                                    class="btn btn-outline-dark btn-sm btn-block btn1">Edit profile</a>
+                                            </div>
+                                            <div class="media-body mb-5 text-white">
+                                                <h4 class="mt-0 mb-0">Mark Williams</h4>
+                                                <p class="small mb-4">
+                                                    <i class="fas fa-map-marker-alt mr-2"></i>New York
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltip02">License No.</label>
-                                      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="<%out.print(dealers.getLicense_No());%>" readonly required="">
+                                    <div class="bg-light p1 d-flex justify-content-end text-center media1">
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+                                                <h5 class="font-weight-bolder mb-0 d-block date1" id="MyClock1"
+                                                    onload="showTime1();">11</h5>
+                                                <small class="text-muted">Hrs</small>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 class="font-weight-bolder mb-0 d-block date1" id="MyClock2"
+                                                    onload="showTime2();">44</h5>
+                                                <small class="text-muted"> Mins</small>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 class="font-weight-bolder mb-0 d-block date1" id="MyClock3"
+                                                    onload="showTime3();">26</h5>
+                                                <small class="text-muted">Secs</small>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltipUsername">Email</label>
-                                      <div class="input-group">
-                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
-                                        <input type="text" class="form-control" id="validationTooltipUsername" value="<%out.print(dealers.getEmail());%>" name="email" aria-describedby="validationTooltipUsernamePrepend" required="">
-                                        <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#email-modal" >Change Email</button>
-                                      </div>
-                                    </div>
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltip02">Address</label>
-                                      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="<%out.println(dealers.getAddress());%>" readonly required="">
+                                </div>
+
+                                <div class="card z-depth-3">
+
+                                    <!-- end card-box-->
+
+                                    <div class="card-body">
+                                        <ul class="nav nav-pills nav-pills-primary nav-justified">
+                                            <li class="nav-item">
+                                                <a href="javascript:void();" data-target="#profile" data-toggle="pill"
+                                                    class="nav-link active show"><i class="icon-user"></i>
+                                                    <span class="hidden-xs">Profile</span></a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a href="javascript:void();" data-target="#edit" data-toggle="pill"
+                                                    class="nav-link "><i class="icon-note"></i>
+                                                    <span class="hidden-xs">Edit</span></a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content p-3">
+                                            <!-- User Profile -->
+                                            <div class="tab-pane active show" id="profile">
+                                                <h5 class="mb-3">Profile</h5>
+                                                <div class="card mb-3" style="flex-direction: row">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Full Name</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getName()%>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">DOB</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getDob()%>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Zone</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary"><%=traffic.getZone()%></div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Mobile</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getContact()%>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Email</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getEmail()%>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Aadhar No.</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getAadharno()%>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Police-Id</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <%=traffic.getUserid()%>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Password</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                ******
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- <div class="card mb-3 mt-0" style="height: 2.5rem;margin-top: -100px;" >
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="m-2">Address</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        abclocation...
+                                                    </div>
+                                                </div>
+                                                </div> -->
+                                                <!-- extra add by dj -->
+                                            </div>
 
 
-                                    </div>
-                                      <form action="DealerUpdateServlet" method="post">
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltip04">Mobile No.</label>
-                                      <input type="text" class="form-control" name="contact" id="validationTooltip04" value="<%out.print(dealers.getContact());%>" required="">
-                                      <button class="btn btn-dark" type="submit">Change Mobile No</button>
-                                    </div>
-                                      </form>
-                                    <div class="position-relative mb-3">
-                                      <label class="form-label" for="validationTooltip05">Password</label>
-                                      <input type="text" class="form-control" id="validationTooltip05" placeholder="*****" required="">
-                                      <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#password-modal" >Change Password</button>
-                                    </div>
-                                </div> <!-- end preview-->
 
-                                <div class="tab-pane" id="tooltips-validation-code">
-                                  <pre class="mb-0">                                                    <span class="html escape hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"needs-validation"</span> <span class="hljs-attr">novalidate</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip01"</span>&gt;</span>First name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip01"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"First name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Mark"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"valid-tooltip"</span>&gt;</span>            Looks good!        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please enter first name.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip02"</span>&gt;</span>Last name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip02"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Last name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Otto"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"valid-tooltip"</span>&gt;</span>            Looks good!        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please enter last name.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltipUsername"</span>&gt;</span>Username<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group"</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltipUsernamePrepend"</span>&gt;</span>@<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltipUsername"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Username"</span>                <span class="hljs-attr">aria-describedby</span>=<span class="hljs-string">"validationTooltipUsernamePrepend"</span> <span class="hljs-attr">required</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>                Please choose a unique and valid username.            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip03"</span>&gt;</span>City<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip03"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"City"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid city.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip04"</span>&gt;</span>State<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip04"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"State"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid state.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip05"</span>&gt;</span>Zip<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip05"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Zip"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid zip.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn btn-primary"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit form<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+                                            <div class="tab-pane " id="edit">
+                                                <div class="card mb-4">
+                                                    <div class="card-header">Edit Details</div>
+
+                                                    <div class="card">
+                                                        <div class="card-body">
+
+
+
+                                                            <!-- end nav-->
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane show active needs-validation was-validated"
+                                                                    id="tooltips-validation-preview" novalidate="">
+                                                                    
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltip01">Username</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="validationTooltip01"
+                                                                                placeholder="First name" value="<%=traffic.getName()%>"
+                                                                                required="" disabled>
+
+
+                                                                        </div>
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltip02" >User
+                                                                                ID</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="validationTooltip02"
+                                                                                placeholder="Last name" value="<%=traffic.getUserid()%>"
+                                                                                required="" disabled>
+
+
+                                                                        </div>
+
+
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltipUsername">Email</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control"
+                                                                                    value="<%=traffic.getEmail()%>"
+                                                                                    aria-label="Recipient's username" disabled>
+                                                                                <button class="btn btn-dark"
+                                                                                    type="button" data-bs-toggle="modal"
+                                                                                    data-bs-target="#email-modal">Change
+                                                                                    Email</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltip05">Password</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Password"
+                                                                                    aria-label="Recipient's username">
+                                                                                <button class="btn btn-dark"
+                                                                                    type="button" data-bs-toggle="modal"
+                                                                                    data-bs-target="#password-modal">Change
+                                                                                    Password</button>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    
+                                                                    <form action="TrafficPoliceUpdateServlet" method="post">
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltip03">Address</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="validationTooltip03"
+                                                                                placeholder="City" name="address" required="">
+
+                                                                        </div>
+                                                                        <div class="position-relative mb-3">
+                                                                            <label class="form-label"
+                                                                                for="validationTooltip04">Mobile
+                                                                                No.</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="validationTooltip04"
+                                                                                placeholder="Phone no." name="contact" required="">
+
+                                                                        </div>
+
+                                                                        <button class="btn btn-primary"
+                                                                            type="submit">Submit form</button>
+                                                                    </form>
+                                                                  
+                                                                </div> <!-- end preview-->
+
+                                                                <div class="tab-pane" id="tooltips-validation-code">
+                                                                    <pre class="mb-0">                                                    <span class="html escape hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"needs-validation"</span> <span class="hljs-attr">novalidate</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip01"</span>&gt;</span>First name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip01"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"First name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Mark"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"valid-tooltip"</span>&gt;</span>            Looks good!        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please enter first name.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip02"</span>&gt;</span>Last name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip02"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Last name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Otto"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"valid-tooltip"</span>&gt;</span>            Looks good!        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please enter last name.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltipUsername"</span>&gt;</span>Username<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group"</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltipUsernamePrepend"</span>&gt;</span>@<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltipUsername"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Username"</span>                <span class="hljs-attr">aria-describedby</span>=<span class="hljs-string">"validationTooltipUsernamePrepend"</span> <span class="hljs-attr">required</span>&gt;</span>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>                Please choose a unique and valid username.            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip03"</span>&gt;</span>City<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip03"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"City"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid city.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip04"</span>&gt;</span>State<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip04"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"State"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid state.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"position-relative mb-3"</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"validationTooltip05"</span>&gt;</span>Zip<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"validationTooltip05"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Zip"</span> <span class="hljs-attr">required</span>&gt;</span>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"invalid-tooltip"</span>&gt;</span>            Please provide a valid zip.        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn btn-primary"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit form<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
                                                 </pre> <!-- end highlight-->
-                                </div> <!-- end preview code-->
-                              </div> <!-- end tab-content-->
-                            </div> <!-- end card-body-->
-                          </div>
+                                                                </div> <!-- end preview code-->
+                                                            </div> <!-- end tab-content-->
+                                                        </div> <!-- end card-body-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
           <!-- container -->
         </div>
         <!-- content -->
@@ -1104,7 +1162,7 @@
                 <script>
                   document.write(new Date().getFullYear());
                 </script>
-                202220222022 © Hyper - Coderthemes.com
+                202220222022 Â© Hyper - Coderthemes.com
               </div>
               <div class="col-md-6">
                 <div class="text-md-end footer-links d-none d-md-block">
@@ -1370,7 +1428,7 @@
                         <label for="otp" class="form-label">Enter OTP</label>
                         <input class="form-control" type="text" name="otp" id="otp" required="" placeholder="Enter OTP">
                     </div>
-                    <input type="hidden" name="page" value="dealermail">
+                    <input type="hidden" name="page" value="trafficemail">
                     <input type="hidden" name="userotp" value="<%=userotp%>">
                     <div class="mb-3 text-center">
                         <button class="btn btn-primary"> Verify OTP</button>
@@ -1384,7 +1442,22 @@
 </div><!-- /.modal -->
 
 
-
+<!--Login Pop-up modal-->
+<!-- Success Alert Modal -->
+<div id="success-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-filled bg-success">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-checkmark h1"></i>
+                    <h4 class="mt-2">Well Done!</h4>
+                    <p class="mt-3">Login Successful !!<br>Hey , <%=userid%><br> Welcome to Dashboard .</p>
+                    <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
   <!-- Email modal content -->
@@ -1407,7 +1480,7 @@
                     </div>
 
                     
-                    <input type="hidden" name="page" value="dealer_dashboard.jsp">
+                    <input type="hidden" name="page" value="trafficPoliceDashboard.jsp">
                     
 
                     <div class="mb-3 text-center">
@@ -1436,26 +1509,29 @@
 
                 <form class="ps-3 pe-3" action="EditPasswordServlet" method="post">
 
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Current Password</label>
-                        <input class="form-control" name="current" type="password" id="username" required="" placeholder="Current Password">
-                    </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Current Password</label>
+                            <input class="form-control" type="password" name="current" id="username" required=""
+                                placeholder="Current Password">
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="emailaddress" class="form-label">New Password</label>
-                        <input class="form-control" name="newpass" type="password" id="emailaddress" required="" placeholder="Enter Password">
-                    </div>
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">New Password</label>
+                            <input class="form-control" type="password" name="newpass" id="emailaddress" required=""
+                                placeholder="Enter Password">
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Confirm Password</label>
-                        <input class="form-control" name="conpass" type="password" required="" id="password" placeholder="Confirm Password">
-                    </div>
-                    <input type="hidden" name="page" value="dealer_dashboard.jsp">
-                    <div class="mb-3 text-center">
-                        <button class="btn btn-primary" type="submit">Change Password</button>
-                    </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Confirm Password</label>
+                            <input class="form-control" type="password" name="conpass" required="" id="password"
+                                placeholder="Confirm Password">
+                        </div>
+                        <input type="hidden" name="page" value="trafficPoliceDashboard.jsp">
+                        <div class="mb-3 text-center">
+                            <button class="btn btn-primary" type="submit">Change Password</button>
+                        </div>
 
-                </form>
+                    </form>
 
             </div>
         </div><!-- /.modal-content -->

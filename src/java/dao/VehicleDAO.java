@@ -1,4 +1,3 @@
-
 package dao;
 
 import db.DBConnector;
@@ -14,6 +13,29 @@ public class VehicleDAO {
     Statement st=db.getStatement();
     ResultSet rs=null;
     
+    public VehicleDTO getVehicleHistory(String chassis_no)
+    {
+        VehicleDTO vehicle=new VehicleDTO();
+        
+        String query="SELECT * FROM vehicle_history WHERE vehicle_id='"+chassis_no+"' ORDER  BY date_checked desc,time_checked DESC LIMIT 1";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                vehicle.setDatechecked(rs.getString("date_checked"));
+                vehicle.setStatus(rs.getString("status_checked"));
+                vehicle.setTimechecked(rs.getString("time_checked"));
+                vehicle.setPoliceid(rs.getString("police_id"));
+                vehicle.setLocationchecked(rs.getString("location_checked"));
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+       return vehicle;
+    }
     public VehicleDTO getVehicleDetails(String chassis_no)
     {
         VehicleDTO vehicle=new VehicleDTO();
@@ -36,8 +58,9 @@ public class VehicleDAO {
                 vehicle.setEmail(rs.getString("email"));
                 vehicle.setPurchaseDate(rs.getString("date_of_registration"));
                 vehicle.setRcno(rs.getString("rc_no"));
-                vehicle.setVehicletype(rs.getString("vehicle_type"));
+                vehicle.setVehiclecolor(rs.getString("vehicle_color"));
                 vehicle.setRegistrationvalidity(rs.getString("registration_validity"));
+                vehicle.setEngineno(rs.getString("engine_no"));
                 vehicle.setChassis(rs.getString("chassis_no"));
             }    
         }  
@@ -72,5 +95,29 @@ public class VehicleDAO {
         }
         
     return arraylist;
+    }
+    
+    public VehicleDTO getVehicleComplain(String vehicleid)
+    {
+        VehicleDTO vehicle=new VehicleDTO();
+        String query="select * from vehicle_complain where vehicle_id='"+vehicleid+"' order by date_time desc limit 1";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                vehicle.setVehicle_complainid(rs.getString("complain_id"));
+                vehicle.setPoliceid(rs.getString("police_id"));
+                vehicle.setComplain_date_time(rs.getString("date_time"));
+                vehicle.setComplain_title(rs.getString("title"));
+                vehicle.setComplain_description(rs.getString("description"));
+                vehicle.setComplain_category(rs.getString("category"));
+            } 
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return vehicle;
     }
 }
