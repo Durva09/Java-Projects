@@ -1,28 +1,40 @@
+<%@page import="dao.VehicleDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dto.VehicleDTO"%>
+<%@page import="dao.TrafficPoliceDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-pricing.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:47:02 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/apps-ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:46:39 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Verify Vehicle</title>
+        <title>Vehicle History</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
-        
+
+        <!-- third party css -->
+        <link href="assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
         <!-- App css -->
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
         <link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
         <!-- Begin page -->
-        
         <%
           String userid=(String)session.getAttribute("userid");
           if(session.getAttribute("userid")==null)
@@ -30,125 +42,114 @@
               response.sendRedirect("userLogin.jsp");
               return ;
           }
-          %>
+          TrafficPoliceDAO traffic=new TrafficPoliceDAO();
+          VehicleDAO vehicle=new VehicleDAO();
+          ArrayList<VehicleDTO> dto=traffic.getVehicleHistoryList(userid);
+        %>
         <div class="wrapper">
             <!-- ========== Left Sidebar Start ========== -->
             <div class="leftside-menu menuitem-active show">
                 <!-- LOGO -->
                 <a href="index.html" class="logo text-center logo-light">
-                    <span class="logo-lg">
-                        <img src="assets/images/logo.png" alt="" height="16">
-                    </span>
-                    <span class="logo-sm">
-                        <img src="assets/images/logo_sm.png" alt="" height="16">
-                    </span>
+                  <span class="logo-lg">
+                    <img src="assets/images/logo.png" alt="" height="16">
+                  </span>
+                  <span class="logo-sm">
+                    <img src="assets/images/logo_sm.png" alt="" height="16">
+                  </span>
                 </a>
-    
+          
                 <!-- LOGO -->
                 <a href="index.html" class="logo text-center logo-dark">
-                    <span class="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="" height="16">
-                    </span>
-                    <span class="logo-sm">
-                        <img src="assets/images/logo_sm_dark.png" alt="" height="16">
-                    </span>
+                  <span class="logo-lg">
+                    <img src="assets/images/logo-dark.png" alt="" height="16">
+                  </span>
+                  <span class="logo-sm">
+                    <img src="assets/images/logo_sm_dark.png" alt="" height="16">
+                  </span>
                 </a>
-    
+          
                 <div class="h-100 show" id="leftside-menu-container" data-simplebar="init">
-                    <div class="simplebar-wrapper menuitem-active" style="margin: 0px">
-                        <div class="simplebar-height-auto-observer-wrapper">
-                            <div class="simplebar-height-auto-observer"></div>
+                  <div class="simplebar-wrapper menuitem-active" style="margin: 0px">
+                    <div class="simplebar-height-auto-observer-wrapper">
+                      <div class="simplebar-height-auto-observer"></div>
+                    </div>
+                    <div class="simplebar-mask show">
+                      <div class="simplebar-offset" style="right: 0px; bottom: 0px">
+                        <div class="simplebar-content-wrapper menuitem-active" tabindex="0" role="region"
+                          aria-label="scrollable content" style="height: 100%; overflow: hidden">
+                          <div class="simplebar-content show" style="padding: 0px">
+                            <!--- Sidemenu -->
+                            <ul class="side-nav">
+                                <li class="side-nav-title side-nav-item">Navigation</li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
+                                        aria-controls="sidebarDashboards" class="side-nav-link collapsed">
+                                        <i class="uil-home-alt"></i>
+                                        <!-- <span class="badge bg-success float-end">4</span> -->
+                                        <span> Dashboards </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-title side-nav-item">Apps</li>
+
+                                <li class="side-nav-item">
+                                    <a href="Traffic_Police_Dashboard.html" class="side-nav-link active">
+                                        <i class="uil-user"></i>
+                                        <span> Profile </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a href="verifyvehicle.html" class="side-nav-link">
+                                        <i class="uil-car-sideview"></i>
+                                        <span>Verify Vehicle</span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a href="verifyuser.html" class="side-nav-link">
+                                        <i class="uil-user-check"></i>
+                                        <span>Verify User</span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item ">
+                                    <a href="vehiclelist.html" class="side-nav-link active">
+                                        <i class="uil-user-check"></i>
+                                        <span>History</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="side-nav-item">
+                                    <a href="apps-chat.html" class="side-nav-link">
+                                        <i class="uil-sign-out-alt"></i>
+                                        <span> Logout </span>
+                                    </a>
+                                </li>
+
+                                <div class="clearfix"></div>
+                            </ul>
+                          </div>
                         </div>
-                        <div class="simplebar-mask show">
-                            <div class="simplebar-offset" style="right: 0px; bottom: 0px">
-                                <div class="simplebar-content-wrapper menuitem-active" tabindex="0" role="region"
-                                    aria-label="scrollable content" style="height: 100%; overflow: hidden">
-                                    <div class="simplebar-content show" style="padding: 0px">
-                                        <!--- Sidemenu -->
-                                        <ul class="side-nav">
-                                            <li class="side-nav-title side-nav-item">Navigation</li>
-    
-                                            <li class="side-nav-item">
-                                                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
-                                                    aria-controls="sidebarDashboards" class="side-nav-link collapsed">
-                                                    <i class="uil-home-alt"></i>
-                                                    <!-- <span class="badge bg-success float-end">4</span> -->
-                                                    <span> Dashboards </span>
-                                                </a>
-                                            </li>
-    
-                                            <li class="side-nav-title side-nav-item">Apps</li>
-    
-                                            <li class="side-nav-item">
-                                                <a href="Traffic_Police_Dashboard.html" class="side-nav-link active">
-                                                    <i class="uil-user"></i>
-                                                    <span> Profile </span>
-                                                </a>
-                                            </li>
-    
-                                            <li class="side-nav-item">
-                                                <a href="verifyvehicle.html" class="side-nav-link">
-                                                    <i class="uil-car-sideview"></i>
-                                                    <span>Verify Vehicle</span>
-                                                </a>
-                                            </li>
-    
-                                            <li class="side-nav-item">
-                                                <a href="verifyuser.html" class="side-nav-link">
-                                                    <i class="uil-user-check"></i>
-                                                    <span>Verify User</span>
-                                                </a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
-                                                  aria-controls="sidebarEcommerce" class="side-nav-link collapsed">
-                                                  <i class="fa fa-car-alt"></i>
-                                                  <span>History</span>
-                                                  <span class="menu-arrow"></span>
-                                                </a>
-                                                <div class="collapse" id="sidebarEcommerce">
-                                                  <ul class="side-nav-second-level">
-                                                    <li>
-                                                      <a href="vehiclelist.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                                                        Vehicle History</a>
-                                                    </li>
-                                                    <li>
-                                                      <a href="verifyuser.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
-                                                        User History</a>
-                                                    </li>
-                                                    
-                                                  </ul>
-                                                </div>
-                                              </li>
-    
-                                            <li class="side-nav-item">
-                                                <a href="apps-chat.html" class="side-nav-link">
-                                                    <i class="uil-sign-out-alt"></i>
-                                                    <span> Logout </span>
-                                                </a>
-                                            </li>
-    
-                                            <div class="clearfix"></div>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="simplebar-placeholder" style="width: auto; height: 1150px"></div>
+                      </div>
                     </div>
-                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden">
-                        <div class="simplebar-scrollbar" style="width: 0px; display: none"></div>
-                    </div>
-                    <div class="simplebar-track simplebar-vertical" style="visibility: hidden">
-                        <div class="simplebar-scrollbar" style="
-                    height: 0px;
-                    transform: translate3d(0px, 0px, 0px);
-                    display: none;
-                  "></div>
-                    </div>
+                    <div class="simplebar-placeholder" style="width: auto; height: 1150px"></div>
+                  </div>
+                  <div class="simplebar-track simplebar-horizontal" style="visibility: hidden">
+                    <div class="simplebar-scrollbar" style="width: 0px; display: none"></div>
+                  </div>
+                  <div class="simplebar-track simplebar-vertical" style="visibility: hidden">
+                    <div class="simplebar-scrollbar" style="
+                          height: 0px;
+                          transform: translate3d(0px, 0px, 0px);
+                          display: none;
+                        "></div>
+                  </div>
                 </div>
                 <!-- Sidebar -left -->
-            </div>
+              </div>
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -477,100 +478,103 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Profile</a></li>
-                                            <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li> -->
-                                            <li class="breadcrumb-item active">Verify Vehicle</li>
+                                            <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li> -->
+                                            <li class="breadcrumb-item active">Vehicle History</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Verify Vehicle</h4>
+                                    <h4 class="page-title">Vehicle History</h4>
                                 </div>
                             </div>
                         </div>     
                         <!-- end page title --> 
 
-
-                        <div class="row justify-content-center">
-                            <div class="col-xxl-10">
-
-                                <!-- Pricing Title-->
-                                <!-- <div class="text-center">
-                                    <h3 class="mb-2">Our Plans and Pricing</h3>
-                                    <p class="text-muted w-50 m-auto">
-                                        We have plans and prices that fit your business perfectly. Make your client site a success with our products.
-                                    </p>
-                                </div> -->
-
-                                <!-- Plans -->
-                                <div class="row mt-sm-5 mt-3 mb-3">
-                                    <div class="col-md-4">
-                                        <div class="card card-pricing">
-                                            <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check New Vehicle</p>
-                                                <img src="assets/images/car1.gif" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
-                                                <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
-                                                <ul class="card-pricing-features">
-                                                    <li>10 GB Storage</li>
-                                                    
-                                                </ul> -->
-                                                <br><br>
-                                                <form action="EmailSendingServlet" method="post">
-                                <center><div class="input-group w-75">
-                                        <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
-                                        <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
-                                        <input type="hidden" name="type" value="new">
-                                </div></center>
-                            
-                                                <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
-		</form>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-sm-5">
+                                                <a href="javascript:void(0);" class="btn btn-danger mb-2" onclick="location.href='verifyvehicle.html'"><i class="mdi mdi-plus-circle me-2" ></i> Add Vehical</a>
                                             </div>
-                                        </div> <!-- end Pricing_card -->
-                                    </div> <!-- end col -->
-
-                                    <div class="col-md-4">
-                                        <div class="card card-pricing">
-                                            <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check Old Vehicle</p>
-                                                <img src="assets/images/bike.png" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
-                                                <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
-                                                <ul class="card-pricing-features">
-                                                    <li>10 GB Storage</li>
-                                                    
-                                                </ul> -->
-                                                <br>
-                                                <form action="EmailSendingServlet" method="post">
-                                                    <center><div class="input-group w-75">
-                                                            <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
-                                                            <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
-                                                            <input type="hidden" name="type" value="old">
-                                                    </div></center>
-
-                                                    <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
-                                            </form>
-                                            </div>
-                                        </div> <!-- end Pricing_card -->
-                                    </div> 
-
-
-                                    <div class="col-md-4">
-                                        <div class="card card-pricing">
-                                            <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check QR-Code</p>
-                                                <img src="assets/images/qrcoder1.webp" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
-                                                <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
-                                                <ul class="card-pricing-features">
-                                                    <li>10 GB Storage</li>
-                                                </ul> -->
-                                                <br>
-                                                <button class="btn btn-primary mt-4 mb-2 rounded-pill" onclick="location.href='#';">Check Vehicle</button>
-                                            </div>
-                                        </div> <!-- end Pricing_card -->
-                                    </div> 
-
-                                </div>
-                                <!-- end row -->
-
-                            </div> <!-- end col-->
+                                            <div class="col-sm-7">
+                                                <div class="text-sm-end">
+                                                    <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
+                                                    <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                                                    <button type="button" class="btn btn-light mb-2">Export</button>
+                                                </div>
+                                            </div><!-- end col-->
+                                        </div>
+                
+                                        <div class="table-responsive">
+                                            <table class="table table-centered w-100 nowrap overflow-auto" id="products-datatable">
+                                                <thead class="table-light" style="overflow-x: auto">
+                                                    <tr>
+                                                        <th class="all" hidden>
+                                                            S.No.
+                                                        </th>
+                                                        
+                                                        <th class="all">Vehicle ID</th>
+                                                        <th>Vehicle Owner</th>
+                                                        <th>Vehicle No.</th>
+                                                        <th>Status</th>
+                                                        <th>Date Checked</th>
+                                                        <th>Time Checked</th>
+                                                        <th>View More</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                            int i=0;
+                                                            while(i<dto.size())
+                                                            {
+                                                                VehicleDTO dto1=dto.get(i);
+                                                                VehicleDTO dto2=vehicle.getVehicleDetails(userid);
+                                                        %>
+                                                        <tr>
+                                                        <form action="EmailSendingServlet" method="post">    
+                                                        <td hidden>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            <p class="m-0 d-inline-block align-middle font-16">
+                                                                <a href="apps-ecommerce-products-details.html" class="text-body"><%=dto1.getChassis()%></a>
+                                                                <br/>
+                                                                <input type="hidden" name="vehicle_id" value="<%=dto1.getChassis()%>">
+                                                                <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
+                                                                <input type="hidden" name="type" value="new">
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <%=dto2.getName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=dto2.getVehicleno()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=dto2.getStatus()%>
+                                                        </td>
+                    
+                                                        <td>
+                                                            <%=dto1.getDatechecked()%>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-success"><%=dto1.getTimechecked()%></span>
+                                                        </td>
+                    
+                                                        <td class="table-action">
+                                                            <center><button type="submit" class="btn btn-success mb-2 me-1"><i class="fa fa-eye"></i></button></center>
+                                                        </td>
+                                                      </form>
+                                                    </tr>
+                                                    <%i++;}%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
                         </div>
-                        <!-- end row -->
+                        <!-- end row -->        
                         
                     </div> <!-- container -->
 
@@ -703,8 +707,21 @@
         <!-- bundle -->
         <script src="assets/js/vendor.min.js"></script>
         <script src="assets/js/app.min.js"></script>
-        
+
+        <!-- third party js -->
+        <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+        <script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
+        <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+        <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
+        <script src="assets/js/vendor/dataTables.checkboxes.min.js"></script>
+
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="assets/js/pages/demo.products.js"></script>
+        <!-- end demo js-->
+
     </body>
 
-<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-pricing.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:47:02 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/apps-ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:46:46 GMT -->
 </html>

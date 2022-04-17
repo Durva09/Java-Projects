@@ -52,7 +52,7 @@
               response.sendRedirect("userLogin.jsp");
               return ;
           }
-          String vehicleid=request.getParameter("vehicle_id");
+          String vehicleid=(String)request.getAttribute("Message");
           if(vehicleid==null)
           {
               vehicleid=(String)request.getAttribute("vehicle_id");
@@ -558,9 +558,10 @@
                                             <div class="col-sm-4 offset-sm-2">
                                                 <div class="mt-3 float-sm-end">
                                                     <p class="font-13"><strong>Last Checked: </strong> <%if(dto1.getDatechecked()==null){out.println("N/A");}else{out.println(dto1.getDatechecked());}%></p>
-                                                    <p class="font-13"><strong>Vehicle Status: </strong> <span class="badge bg-success float-end"><%=dto1.getStatus()%></span></p>
+<!--                                                    <p class="font-13"><strong>Vehicle Status: </strong> <span class="badge bg-success float-end"><%=dto1.getStatus()%></span></p>-->
                                                     <p class="font-13"><strong>Police ID: </strong> <span class="float-end"><%=dto1.getPoliceid()%></span></p>
                                                     <p class="font-13"><strong>Location Checked: </strong> <span class="float-end"><%=dto1.getLocationchecked()%></span></p>
+                                                    <p class="font-13"><strong>Time Checked: </strong> <span class="float-end"><%=dto1.getTimechecked()%></span></p>
                                                 </div>
                                             </div><!-- end col -->
                                         </div>

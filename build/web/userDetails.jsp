@@ -1,14 +1,14 @@
 <%@page import="dto.DocsDTO"%>
 <%@page import="dao.DocsDAO"%>
-<%@page import="dto.VehicleDTO"%>
-<%@page import="dao.VehicleDAO"%>
+<%@page import="dto.UserDTO"%>
+<%@page import="dao.UserDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     
 <!-- Mirrored from coderthemes.com/hyper_2/saas/apps-ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:46:39 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Details</title>
+        <title>User Details</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -24,10 +24,7 @@
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
         <link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-      />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
   
       <link rel="stylesheet" href="Additional Assets/docs-pop.css">
@@ -41,29 +38,37 @@
           display: none;
       }
      </style>
+     
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
         <!-- Begin page -->
-         <%
+        <%
           String userid=(String)session.getAttribute("userid");
           if(session.getAttribute("userid")==null)
           {
               response.sendRedirect("userLogin.jsp");
               return ;
           }
-          String vehicleid=(String)request.getAttribute("Message");
-          if(vehicleid==null)
+          String user_id=(String)request.getAttribute("Message");
+          if(user_id==null)
           {
-              vehicleid=(String)request.getAttribute("vehicle_id");
+              user_id=(String)request.getAttribute("user_id");
           }
-          VehicleDAO vehicle=new VehicleDAO();
-          VehicleDTO dto=vehicle.getVehicleDetails(vehicleid);
-          VehicleDTO dto1=vehicle.getVehicleHistory(vehicleid);
-          VehicleDTO dto3=vehicle.getVehicleComplain(vehicleid);
-          DocsDAO dao=new DocsDAO();
-          DocsDTO dto2=dao.getLicenseInfo(dto.getLicense());
-          %>
+          UserDAO user=new UserDAO();
+          UserDTO dto=user.getUserData(user_id);
+          DocsDAO docs=new DocsDAO();
+          DocsDTO doc=docs.getUserDocs(user_id);
+          DocsDTO udto=docs.getUserDocs(user_id);
+          String license=udto.getLicense();
+          DocsDTO dto2=docs.getLicenseInfo(license); 
+          
+          String aadhar=udto.getAadhar();
+          DocsDTO dto3= docs.getAadharInfo(aadhar);
+          UserDTO dto1=user.getUserHistory(user_id);
+          UserDTO dto4=user.getUserComplain(user_id);
+          
+        %>
         <div class="wrapper">
             <!-- ========== Left Sidebar Start ========== -->
             <div class="leftside-menu menuitem-active show">
@@ -510,11 +515,11 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Verify Vehicle</a></li>
-                                            <li class="breadcrumb-item active">Vehicle Details</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Verify User</a></li>
+                                            <li class="breadcrumb-item active">User Details </li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Vehicle Details</h4>
+                                    <h4 class="page-title">User Details</h4>
                                 </div>
                             </div>
                         </div>     
@@ -528,9 +533,9 @@
                                         <!-- Invoice Logo-->
                                         <div class="clearfix">
                                             <div class="float-start mb-3">
-                                                <h4 class="m-0 d-print-none ">Vehicle No. : <%=dto.getVehicleno()%></h4>
+                                                <h4 class="m-0 d-print-none ">User ID : <%=user_id%></h4>
                                             </div>
-                                            <%if(dto3.getVehicle_complainid()!=null && !(dto3.getComplain_category().equals("Close_Complain"))){%>
+                                            <%if(dto4.getUser_complainid()!=null && !(dto4.getComplain_category().equals("Close_Complain"))){%>
                                             <div class="float-end">
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#danger-header-modal">ALERT</button>
                                             </div>
@@ -551,14 +556,14 @@
                                             <div class="col-sm-6">
                                                 <div class="float-end mt-3">
                                                     <p><b><%=dto.getName()%>, <%=dto.getEmail()%></b></p>
-                                                    <p class="text-muted font-13">This vehicle belongs to <%=dto.getName()%> since <%=dto.getPurchaseDate()%>... It is a <%=dto.getVehiclecolor()%> colored vehicle. The driving license of the owner is attached below.</p>
+                                                    <p class="text-muted font-13">This vehicle belongs to <%=dto.getName()%> since 2019... It is a red colored vehicle. The driving license of the owner is attached below.</p>
                                                 </div>
             
                                             </div><!-- end col -->
                                             <div class="col-sm-4 offset-sm-2">
                                                 <div class="mt-3 float-sm-end">
                                                     <p class="font-13"><strong>Last Checked: </strong> <%if(dto1.getDatechecked()==null){out.println("N/A");}else{out.println(dto1.getDatechecked());}%></p>
-<!--                                                    <p class="font-13"><strong>Vehicle Status: </strong> <span class="badge bg-success float-end"><%=dto1.getStatus()%></span></p>-->
+<!--                                                    <p class="font-13"><strong>Vehicle Status: </strong> <span class="badge bg-success float-end"></span></p>-->
                                                     <p class="font-13"><strong>Police ID: </strong> <span class="float-end"><%=dto1.getPoliceid()%></span></p>
                                                     <p class="font-13"><strong>Location Checked: </strong> <span class="float-end"><%=dto1.getLocationchecked()%></span></p>
                                                     <p class="font-13"><strong>Time Checked: </strong> <span class="float-end"><%=dto1.getTimechecked()%></span></p>
@@ -567,110 +572,12 @@
                                         </div>
                                         <!-- end row -->
             
-                                        <div class="row mt-4">
-                                            <div class="col-sm-4">
-                                                <h6>Owner Details</h6>
-                                                <address>
-                                                    <%=dto.getName()%><br>
-                                                    <%=dto.getAddress()%><br>
-                                                    <abbr title="Phone">P: </abbr> <%=dto.getContact1()%>
-                                                </address>
-                                            </div> <!-- end col-->
-            
-                                            <div class="col-sm-4">
-                                                <h6>Vehicle Description</h6>
-                                                <address>
-                                                    Vehicle Type : <%=dto.getVehicletype()%> wheeler<br>
-                                                    Vehicle Company : <%=dto.getVehiclecompany()%> <br>
-                                                    Model No. : <%=dto.getModelno()%><br>
-                                                    Chassis No. : <%=dto.getChassis()%><br>
-                                                    RC Card No. : <%=dto.getRcno()%><br>
-                                                    Engine No. : <%=dto.getEngineno()%><br>
-                                                    Vehicle Color  : <%=dto.getVehiclecolor()%><br>
-                                                    Registration Validity  : <%=dto.getRegistrationvalidity()%><br>
-                                                </address>
-                                            </div> <!-- end col-->
-            
-                                            <div class="col-sm-4">
-                                                <div class="text-sm-end">
-                                                    <img src="assets/images/barcode.png" alt="barcode-image" class="img-fluid me-2" />
-                                                </div>
-                                            </div> <!-- end col-->
-                                        </div>    
-                                        <!-- end row -->        
-    
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <br>
-                                                <br>
-                                                <h4 class="m-0 d-print-none">View Owner License</h4>
-                                                <div class="card mb-0 mt-2">
-
-                                                    <div class="card-body p-3">
-                                                      <div class="d-flex align-items-start">
-                                                        <img src="Additional Assets/images/ashoka.png" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
-                                                        <div class="w-100 overflow-hidden">
-                                                          <h5 class="mb-1 mt-1">Driving License</h5>
-                                                          <p class="mb-0"> <%=dto.getLicense()%> </p>
-                                                        </div> <!-- end w-100 -->
-                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#driving-license">View</button>
-                                                        
-                                                      </div> <!-- end d-flex -->
-                                                    </div> <!-- end card-body -->
-                                                  </div>
-                                            </div> <!-- end col -->
-                                        </div>
-                                        <!-- end row -->
-<br>
-<br>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="clearfix pt-3">
-                                                    <h6 class="text-muted">Notes:</h6>
-                                                    <small>
-                                                        All accounts are to be paid within 7 days from receipt of
-                                                        invoice. To be paid by cheque or credit card or direct payment
-                                                        online. If account is not paid within 7 days the credits details
-                                                        supplied as confirmation of work undertaken will be charged the
-                                                        agreed quoted fee noted above.
-                                                    </small>
-                                                </div>
-                                            </div> <!-- end col -->
-                                            
-                                        </div>
-                                        <!-- end row-->
-    
-                                         
-                                        <!-- end buttons -->
-
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card -->
-                            </div> <!-- end col-->
-                        </div>
-                        <!-- end row -->
-                        
+                                        
                     </div> <!-- container -->
 
                 </div> <!-- content -->
 
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-md-block">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-                <!-- end Footer -->
+                
 
             </div>
 
@@ -680,74 +587,283 @@
 
 
         </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">Owner Information</h4>
+
+                        <h5><%=dto.getName()%></h5>
+                        
+                        <address class="mb-0 font-14 address-lg">
+                            <%=dto.getAddress()%><br><br>
+                            <p class="mb-0"><span class="fw-bold me-2">License No. :</span> <%=doc.getLicense()%></p>
+                                <p class="mb-0"><span class="fw-bold me-2">Phone :</span> <%=dto.getContact()%></p>
+                                <p class="mb-0"><span class="fw-bold me-2">Email :</span> <%=dto.getEmail()%></p>
+                        </address>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">User Details</h4>
+                        <div class="col-sm-12"> 
+                          <div class="text-sm">
+                              <img src="assets/images/barcode.png" alt="barcode-image" class="img-fluid me-2"/>
+                              <span style="margin: 5.5vw;"></span>
+                              <img src="assets/images/barcode.png" alt="barcode-image" class="img-fluid me-2"/>
+                          </div>
+                      </div> <!-- end col-->
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+
+             <!-- end col -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <br>
+                                <br>
+                                <h4 class="m-0 d-print-none">View User License</h4>
+                                <div class="card mb-0 mt-2">
+
+                                    <div class="card-body p-3">
+                                      <div class="d-flex align-items-start">
+                                        <img src="Additional Assets/images/ashoka.png" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                        <div class="w-100 overflow-hidden">
+                                          <h5 class="mb-1 mt-1">Driving License</h5>
+                                          <p class="mb-0"> <%=license%> </p>
+                                        </div> <!-- end w-100 -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#driving-license">View</button>
+                                        
+                                      </div> <!-- end d-flex -->
+                                    </div> <!-- end card-body -->
+                                  </div>
+
+                                  <br>
+                            <br>
+
+                            <h4 class="m-0 d-print-none">View User Aadhar</h4>
+                            <div class="card mb-0 mt-2">
+
+                                <div class="card-body p-3">
+                                  <div class="d-flex align-items-start">
+                                    <img src="Additional Assets/images/Aadhar.svg" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                    <div class="w-100 overflow-hidden">
+                                      <h5 class="mb-1 mt-1">Aadhar Card</h5>
+                                      <p class="mb-0"> <%=aadhar%> </p>
+                                    </div> <!-- end w-100 -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aadhar-card">View</button>
+                                    
+                                  </div> <!-- end d-flex -->
+                                </div> <!-- end card-body -->
+                              </div>
+                        </div>
+                            </div> <!-- end col -->
+
+                            
+                        <!-- end row -->
+<br>
+<br>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clearfix pt-3">
+                                    <h6 class="text-muted">Notes:</h6>
+                                    <small>
+                                        All accounts are to be paid within 7 days from receipt of
+                                        invoice. To be paid by cheque or credit card or direct payment
+                                        online. If account is not paid within 7 days the credits details
+                                        supplied as confirmation of work undertaken will be charged the
+                                        agreed quoted fee noted above.
+                                    </small>
+                                </div>
+                            </div> <!-- end col -->
+                            
+                        </div>
+                        <!-- end row-->
+
+                        
+                        <!-- end buttons -->
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card -->
+            </div> <!-- end col-->
+        </div>
+        <!-- end row -->
+        
+
+                        
+    </div> <!-- container -->
+
+</div> <!-- content -->
+
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-end footer-links d-none d-md-block">
+                    <a href="javascript: void(0);">About</a>
+                    <a href="javascript: void(0);">Support</a>
+                    <a href="javascript: void(0);">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->
+
+</div>
+
+<!-- ============================================================== -->
+<!-- End Page content -->
+<!-- ============================================================== -->
+
+
+</div>
         <!-- END wrapper -->
 
 
 
         <!-- Modals -->
 
+
+        
 <!-- Suspicious List Modal -->
-        <div id="suspicious-list" class="modal fade" tabindex="-1" aria-modal="true" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
+<div id="suspicious-list" class="modal fade" tabindex="-1" aria-modal="true" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
 
-                    <div class="modal-body">
-                        <div class="text-center mt-2 mb-4">
-                            <a href="index.html" class="text-success">
-                                <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
-                                <h4 class="modal-title" id="myLargeModalLabel">Report Vehicle</h4>
-                            </a>
-                        </div>
+          <div class="modal-body">
+              <div class="text-center mt-2 mb-4">
+                  <a href="index.html" class="text-success">
+                      <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                      <h4 class="modal-title" id="myLargeModalLabel">Report User</h4>
 
-                        <form class="ps-3 pe-3" action="VehicleComplainServlet" method="post">
+                  </a>
+              </div>
 
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Vehicle ID / Vehicle NO.</label>
-                                <input class="form-control" type="text"  value="<%=dto.getChassis()%>" name="vehicleid" readonly>
-                            </div>
-                           <div class="mb-3">
-                                <label for="username" class="form-label">Police ID </label>
-                                <input class="form-control" type="text"  value="<%=dto1.getPoliceid()%>" name="policeid" readonly>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="example-select" class="form-label">Complain Type</label>
-                                <select class="form-select" id="example-select" name="category">
-                                    <option value="">Select Complaint Type</option>
-                                    <option value="Close_Complain">Close_Complain</option>
-                                    <option value="Missing_Report">Missing_Report</option>
-                                    <option value="Criminal_Activity">Criminal_Activity</option>
-                                </select>
-                              </div>
-                             <div class="mb-3">
-                                <label for="username" class="form-label">Complain Title </label>
-                                <input class="form-control" type="text" id="vehicleid" required="" name="title">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Description</label>
-                                <textarea name="description" name="description" cols="30" rows="2" class="form-control"></textarea>
-                            </div>
+              <form class="ps-3 pe-3" action="UserComplainServlet" method="post">
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="customCheck1">
-                                    <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
-                                </div> 
-                            </div>
+                  <div class="mb-3">
+                      <label for="username" class="form-label">User ID</label>
+                      <input class="form-control" type="text" name="user_id" value="<%=user_id%>" readonly>
+                  </div>
+                   <div class="mb-3">
+                      <label for="username" class="form-label">Police ID</label>
+                      <input class="form-control" type="text" name="police_id" value="<%=userid%>" readonly>
+                  </div>
+                  <div class="mb-3">
+                      <label for="username" class="form-label">Complain Title</label>
+                      <input class="form-control" type="text" name="title" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="example-select" class="form-label">Complain Type</label>
+                    <select class="form-select" id="example-select" name="category">
+                        <option value="">Select Complaint Type</option>
+                        <option value="Criminal">Criminal</option>
+                        <option value="Suspect">Suspect</option>
+                        <option value="Close_Complain">Close_Complain</option>
+                    </select>
+                  </div>
 
-                            <div class="mb-3 text-center">
-                                <button class="btn btn-primary" type="submit">Report</button>
-                            </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Description</label>
+                      <textarea name="description" cols="30" rows="2" class="form-control"></textarea>
+                  </div>
 
-                        </form>
+                  <div class="mb-3">
+                      <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="customCheck1">
+                          <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
+                      </div> 
+                  </div>
 
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
+                  <div class="mb-3 text-center">
+                      <button class="btn btn-primary" type="submit">Report</button>
+                  </div>
 
+              </form>
 
+          </div>
+      </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
+            <!--  Modal Code : Aadhar Card -->
+    <div class="modal fade" id="aadhar-card" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  
+                  <div >
+                      <img src="Additional Assets/images/top.png" alt="top" class="top">
+                  </div>
+                  <div class="table1">
+                      <table>
+                          <tr class="trow">
+                              <td class="tcol">
+                                  <img src="Additional Assets/images/profile.png" alt="profile" class="profile">
+                              </td>
+                              <td class="tcol">
+                                  <ul style="list-style-type: none;">
+                                    <li>
+                                          <%=dto3.getName()%>
+                                      </li>
+                                      <li>
+                                          <%=dto3.getDob()%>
+                                      </li>
+                                      <li>
+                                          <%=dto3.getGender()%>
+                                      </li>
+                                      <li>
+                                          <%=aadhar%>
+                                      </li>
+                                  </ul>
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+                  <div>
+                      <table>
+                          <tr>
+                              <p style=" width:80%; margin-left: 5%;"><b>Address</b></p>
+                          </tr>
+                          <tr>
+                              <p style=" width:80%; margin-left: 5%;"><%=dto.getAddress()%></p>
+                              <hr style="width: 90%; color: black;">
+                          </tr>
+                      </table>
+                  </div>
+                  
+                  <div >
+                      <img src="Additional Assets/images/bottom.png" alt="bottom" class="bottom">
+                  </div>
+
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
             <!--  Modal Code : Driving License -->
   <div class="modal fade" id="driving-license" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -791,7 +907,7 @@
                             <tr>
                                 <td>License No.</td>
                                 <td>:</td>
-                                <td><%=dto.getLicense()%></td>
+                                <td><%=license%></td>
                             </tr>
                         </table>
             
@@ -869,37 +985,37 @@
   <!-- ALERT MODAL -->
   <div id="danger-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="danger-header-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="ps-3 pe-3" action="VehicleComplainServlet" method="post">
+        <form class="ps-3 pe-3" action="UserComplainServlet" method="post">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-danger">
-                <h4 class="modal-title" id="danger-header-modalLabel"><%=dto3.getComplain_title()%></h4>
+                <h4 class="modal-title" id="danger-header-modalLabel"><%=dto4.getComplain_title()%></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="switchVisible2();" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="Body1">
-                <h5 class="mt-0"><%=dto3.getComplain_category()%></h5>
-                <p><%=dto3.getComplain_description()%>....</p>
+                <h5 class="mt-0"><%=dto4.getComplain_category()%></h5>
+                <p><%=dto4.getComplain_description()%>....</p>
             </div>
             <div class="modal-body" id="Body2"><!-- Modal Body Hidden Open -->
                 
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Vehicle ID / Vehicle NO.</label>
-                        <input class="form-control" type="text" name="vehicleid" value="<%=dto.getChassis()%>" readonly>
+                        <label for="username" class="form-label">User ID </label>
+                        <input class="form-control" type="text" name="user_id" value="<%=user_id%>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Police ID </label>
-                        <input class="form-control" type="text"  value="<%=dto1.getPoliceid()%>" name="policeid" readonly>
+                        <input class="form-control" type="text"  value="<%=userid%>" name="policeid" readonly>
                     </div>
                     <div class="mb-3">
-                        <input class="form-control" type="hidden"  value="<%=dto3.getComplain_title()%>" name="title">
+                        <input class="form-control" type="hidden"  value="<%=dto4.getComplain_title()%>" name="title">
                     </div>
                     <div class="mb-3">
                         <label for="example-select" class="form-label">Complain Type</label>
                         <select class="form-select" id="example-select" name="category">
-                            <option value="">Select Complaint Type</option>
-                            <option value="Missing_Report">Missing_Report</option>
-                            <option value="Close_Complain">Close_Complain</option>
-                            <option value="Criminal_Activity">Criminal_Activity</option>
+                           <option value="">Select Complaint Type</option>
+                        <option value="Criminal">Criminal</option>
+                        <option value="Suspect">Suspect</option>
+                        <option value="Close_Complain">Close_Complain</option>
                         </select>
                       </div>
 
@@ -1024,8 +1140,23 @@
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
 
-<!-- Modal Switching Script Open  -->
-  
+
+        <!-- bundle -->
+        <script src="assets/js/vendor.min.js"></script>
+        <script src="assets/js/app.min.js"></script>
+
+        <!-- third party js -->
+        <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+        <script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
+        <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+        <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
+        <script src="assets/js/vendor/dataTables.checkboxes.min.js"></script>
+
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="assets/js/pages/demo.products.js"></script>
+        <!-- end demo js-->
 <script>
     function switchVisible1() {
             if (document.getElementById('Body1')) {
@@ -1065,23 +1196,6 @@ function switchVisible2() {
 }
 </script><!-- Modal Switching Script Close -->
 <!-- MODAL CLOSED-->
-
-        <!-- bundle -->
-        <script src="assets/js/vendor.min.js"></script>
-        <script src="assets/js/app.min.js"></script>
-
-        <!-- third party js -->
-        <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
-        <script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
-        <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
-        <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
-        <script src="assets/js/vendor/dataTables.checkboxes.min.js"></script>
-
-        <!-- third party js ends -->
-
-        <!-- demo app -->
-        <script src="assets/js/pages/demo.products.js"></script>
-        <!-- end demo js-->
 
     </body>
 

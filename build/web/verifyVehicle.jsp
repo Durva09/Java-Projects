@@ -512,9 +512,11 @@
                                                     
                                                 </ul> -->
                                                 <br><br>
-		<form action="vehicleOwnerDetails.jsp">
+                                                <form action="EmailSendingServlet" method="post">
                                 <center><div class="input-group w-75">
                                         <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
+                                        <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
+                                        <input type="hidden" name="type" value="new">
                                 </div></center>
                             
                                                 <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
@@ -534,7 +536,15 @@
                                                     
                                                 </ul> -->
                                                 <br>
-                                                <button class="btn btn-primary mt-4 mb-2 rounded-pill" onclick="location.href='verifyviavehicleno.html';">Check Vehicle</button>
+                                                <form action="EmailSendingServlet" method="post">
+                                                    <center><div class="input-group w-75">
+                                                            <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
+                                                            <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
+                                                            <input type="hidden" name="type" value="old">
+                                                    </div></center>
+
+                                                    <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
+                                            </form>
                                             </div>
                                         </div> <!-- end Pricing_card -->
                                     </div> 

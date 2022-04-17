@@ -4,7 +4,7 @@
 <!-- Mirrored from coderthemes.com/hyper_2/saas/pages-pricing.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Feb 2022 12:47:02 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Verify Vehicle</title>
+        <title>Verify User</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -22,15 +22,6 @@
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
         <!-- Begin page -->
-        
-        <%
-          String userid=(String)session.getAttribute("userid");
-          if(session.getAttribute("userid")==null)
-          {
-              response.sendRedirect("userLogin.jsp");
-              return ;
-          }
-          %>
         <div class="wrapper">
             <!-- ========== Left Sidebar Start ========== -->
             <div class="leftside-menu menuitem-active show">
@@ -99,6 +90,7 @@
                                                     <span>Verify User</span>
                                                 </a>
                                             </li>
+    
                                             <li class="side-nav-item">
                                                 <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
                                                   aria-controls="sidebarEcommerce" class="side-nav-link collapsed">
@@ -113,14 +105,14 @@
                                                         Vehicle History</a>
                                                     </li>
                                                     <li>
-                                                      <a href="verifyuser.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
+                                                      <a href="userlist.html"><i class="fa fa-car-alt"></i>&nbsp;&nbsp;
                                                         User History</a>
                                                     </li>
                                                     
                                                   </ul>
                                                 </div>
                                               </li>
-    
+                                            
                                             <li class="side-nav-item">
                                                 <a href="apps-chat.html" class="side-nav-link">
                                                     <i class="uil-sign-out-alt"></i>
@@ -478,10 +470,10 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Profile</a></li>
                                             <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li> -->
-                                            <li class="breadcrumb-item active">Verify Vehicle</li>
+                                            <li class="breadcrumb-item active">Verify USer</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Verify Vehicle</h4>
+                                    <h4 class="page-title">Verify User</h4>
                                 </div>
                             </div>
                         </div>     
@@ -504,22 +496,22 @@
                                     <div class="col-md-4">
                                         <div class="card card-pricing">
                                             <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check New Vehicle</p>
-                                                <img src="assets/images/car1.gif" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
-                                                <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
-                                                <ul class="card-pricing-features">
+                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check User-Id</p>
+                                                <img src="assets/images/userid.jpg" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
+                                                <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2> -->
+                                                <!-- <ul class="card-pricing-features">
                                                     <li>10 GB Storage</li>
                                                     
                                                 </ul> -->
-                                                <br><br>
+                                                <br>
                                                 <form action="EmailSendingServlet" method="post">
                                 <center><div class="input-group w-75">
-                                        <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
-                                        <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
-                                        <input type="hidden" name="type" value="new">
+                                        <input type="search" name="user_id" class="form-control " placeholder="Search...">
+                                        <input type="hidden" name="page" value="userDetails.jsp">
+                                        <input type="hidden" name="type" value="id">
                                 </div></center>
                             
-                                                <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
+                                                <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check User</button>
 		</form>
                                             </div>
                                         </div> <!-- end Pricing_card -->
@@ -528,23 +520,23 @@
                                     <div class="col-md-4">
                                         <div class="card card-pricing">
                                             <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check Old Vehicle</p>
-                                                <img src="assets/images/bike.png" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
+                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check User Using License No.</p>
+                                                <img src="assets/images/aadhar.png" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
                                                 <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
                                                 <ul class="card-pricing-features">
                                                     <li>10 GB Storage</li>
                                                     
                                                 </ul> -->
                                                 <br>
-                                                <form action="EmailSendingServlet" method="post">
-                                                    <center><div class="input-group w-75">
-                                                            <input type="search" name="vehicle_id" class="form-control " placeholder="Search...">
-                                                            <input type="hidden" name="page" value="vehicleOwnerDetails.jsp">
-                                                            <input type="hidden" name="type" value="old">
-                                                    </div></center>
-
-                                                    <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check Vehicle</button>
-                                            </form>
+                                                 <form action="EmailSendingServlet" method="post">
+                                <center><div class="input-group w-75">
+                                        <input type="search" name="user_id" class="form-control " placeholder="Search...">
+                                        <input type="hidden" name="page" value="userDetails.jsp">
+                                        <input type="hidden" name="type" value="no">
+                                </div></center>
+                            
+                                                <button type="submit" class="btn btn-primary mt-1 mb-2 rounded-pill" >Check User</button>
+		</form>
                                             </div>
                                         </div> <!-- end Pricing_card -->
                                     </div> 
@@ -553,14 +545,15 @@
                                     <div class="col-md-4">
                                         <div class="card card-pricing">
                                             <div class="card-body text-center">
-                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check QR-Code</p>
+                                                <p class="card-pricing-plan-name fw-bold text-uppercase">Check User QR-Code</p>
                                                 <img src="assets/images/qrcoder1.webp" alt="contact-img" title="contact-img" class="rounded me-3" height="80">
                                                 <!-- <h2 class="card-pricing-price">$19 <span>/ Month</span></h2>
                                                 <ul class="card-pricing-features">
                                                     <li>10 GB Storage</li>
+                                                    
                                                 </ul> -->
                                                 <br>
-                                                <button class="btn btn-primary mt-4 mb-2 rounded-pill" onclick="location.href='#';">Check Vehicle</button>
+                                                <button class="btn btn-primary mt-4 mb-2 rounded-pill" onclick="location.href='#'">Check User</button>
                                             </div>
                                         </div> <!-- end Pricing_card -->
                                     </div> 

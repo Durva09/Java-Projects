@@ -6,7 +6,6 @@ import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Date;
 
 public class UserDAO 
@@ -95,14 +94,6 @@ public class UserDAO
                 /*Additional Code To Get The Age Of The Uesr*/
                 dob = rs.getString("dob");
             }
-            
-            /*Additional Code To Get The Age Of The Uesr*/
-            Date d=new Date();
-            int year=d.getYear()+1900; //Getting the current year
-            birthyear = ""+dob.charAt(0)+dob.charAt(1)+dob.charAt(2)+dob.charAt(3); //Getting the year of birth
-            year = year - Integer.parseInt(birthyear); //Getting the age
-            birthyear = ""+year;
-            user.setAge(birthyear); //Setting the age in UserDTO
         }
         catch(SQLException e)
         {
@@ -110,4 +101,73 @@ public class UserDAO
         }
       return user;
     }
+    
+    public UserDTO getUserHistory(String user_id)
+    {
+        UserDTO user=new UserDTO();
+        
+        String query="SELECT * FROM user_history WHERE user_id='"+user_id+"' ORDER  BY date_checked desc,time_checked DESC LIMIT 1,1";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                user.setDatechecked(rs.getString("date_checked"));
+//                vehicle.setStatus(rs.getString("status_checked"));
+                user.setTimechecked(rs.getString("time_checked"));
+                user.setPoliceid(rs.getString("police_id"));
+                user.setLocationchecked(rs.getString("location_checked"));
+                user.setStats(rs.getString("current_stat"));
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+       return user;
+    }
+    
+    public UserDTO getUserComplain(String userid)
+    {
+        UserDTO user=new UserDTO();
+        String query="select * from user_complain where user_id='"+userid+"' order by date_time desc limit 1";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                user.setUser_complainid(rs.getString("complain_id"));
+                user.setPoliceid(rs.getString("police_id"));
+                user.setComplain_date_time(rs.getString("date_time"));
+                user.setComplain_title(rs.getString("title"));
+                user.setComplain_description(rs.getString("description"));
+                user.setComplain_category(rs.getString("category"));
+            } 
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return user;
+    }
+    
+    public String getUserid(String license)
+    {
+        String userid="";
+        String query="select userid from doc_list where license_no='"+license+"'";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                userid=rs.getString("userid");
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return userid;
+    }
+    
 }

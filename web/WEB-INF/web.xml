@@ -80,6 +80,10 @@
         <servlet-name>VehicleComplainServlet</servlet-name>
         <servlet-class>controller.VehicleComplainServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserComplainServlet</servlet-name>
+        <servlet-class>controller.UserComplainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLoginCheckerServlet</servlet-name>
         <url-pattern>/UserLoginCheckerServlet</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>VehicleComplainServlet</servlet-name>
         <url-pattern>/VehicleComplainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserComplainServlet</servlet-name>
+        <url-pattern>/UserComplainServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

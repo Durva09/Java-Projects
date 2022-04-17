@@ -17,14 +17,14 @@ public class VehicleDAO {
     {
         VehicleDTO vehicle=new VehicleDTO();
         
-        String query="SELECT * FROM vehicle_history WHERE vehicle_id='"+chassis_no+"' ORDER  BY date_checked desc,time_checked DESC LIMIT 1";
+        String query="SELECT * FROM vehicle_history WHERE vehicle_id='"+chassis_no+"' ORDER  BY date_checked desc,time_checked DESC LIMIT 1,1";
         try
         {
             ResultSet rs=st.executeQuery(query);
             while(rs.next())
             {
                 vehicle.setDatechecked(rs.getString("date_checked"));
-                vehicle.setStatus(rs.getString("status_checked"));
+//                vehicle.setStatus(rs.getString("status_checked"));
                 vehicle.setTimechecked(rs.getString("time_checked"));
                 vehicle.setPoliceid(rs.getString("police_id"));
                 vehicle.setLocationchecked(rs.getString("location_checked"));
@@ -51,12 +51,10 @@ public class VehicleDAO {
                 vehicle.setPurchaseDate(rs.getString("date_of_registration"));
                 vehicle.setModelno(rs.getString("model_no"));
                 vehicle.setVehiclecompany(rs.getString("vehicle_company"));
-                vehicle.setVehicleno(rs.getString("vehicle_no"));
                 vehicle.setAddress(rs.getString("address"));
                 vehicle.setLicense(rs.getString("license_no"));
                 vehicle.setContact1(rs.getString("phone1"));
                 vehicle.setEmail(rs.getString("email"));
-                vehicle.setPurchaseDate(rs.getString("date_of_registration"));
                 vehicle.setRcno(rs.getString("rc_no"));
                 vehicle.setVehiclecolor(rs.getString("vehicle_color"));
                 vehicle.setRegistrationvalidity(rs.getString("registration_validity"));
@@ -120,4 +118,24 @@ public class VehicleDAO {
         }
         return vehicle;
     }
+    
+    public String getOldVehicleDetails(String vehicleno)
+    {
+        String vehicleid="";
+        String query="select * from vehicle_registration where vehicle_no='"+vehicleno+"'";
+        try
+        {
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next())
+            {
+                vehicleid=rs.getString("chassis_no");
+            }    
+        }  
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+       return vehicleid;
+    }
+    
 }
